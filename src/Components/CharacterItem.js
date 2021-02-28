@@ -2,10 +2,15 @@ import React, {Component} from 'react';
 import {View, Text, Image, Touchable, TouchableOpacity} from 'react-native';
 
 export default class CharacterItem extends Component {
+  deleteCharacter = (id) => {
+    this.props.deleteCharacter(id);
+  };
+
   render() {
-    const {image, name} = this.props;
+    const {image, name, id} = this.props;
     return (
-      <View
+      <TouchableOpacity
+        onPress={() => this.props.goTo()}
         style={{
           width: '100%',
           height: 80,
@@ -25,13 +30,13 @@ export default class CharacterItem extends Component {
           }}
         />
         <Text>{name}</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => this.deleteCharacter(id)}>
           <Image
             source={require('../Assets/trash.png')}
             style={{width: 30, height: 30}}
           />
         </TouchableOpacity>
-      </View>
+      </TouchableOpacity>
     );
     Text;
   }

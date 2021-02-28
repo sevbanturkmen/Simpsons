@@ -6,10 +6,10 @@ import {
   Image,
   Dimensions,
   TextInput,
-  Touchable,
 } from 'react-native';
 import {connect} from 'react-redux';
 import {addCharacter} from '../Actions/character';
+import styles from '../Styles/addCharacter';
 
 class AddCharacter extends Component {
   constructor(props) {
@@ -22,146 +22,63 @@ class AddCharacter extends Component {
     };
   }
 
-  AddCharacter = () => {
+  AddCharacter = async () => {
     const {name, job, avatar, about} = this.state;
-    addCharacter(name, job, avatar, about);
+    if (name !== '' && job !== '' && avatar !== '' && about !== '') {
+      await addCharacter(name, job, avatar, about);
+      this.props.navigation.navigate('Characters');
+    } else {
+      alert('Please fill all inputs');
+    }
   };
 
   render() {
-    const windowWidth = Dimensions.get('window').width;
     return (
       <View style={{flex: 1}}>
-        <View
-          style={{
-            height: 50,
-            backgroundColor: 'white',
-            flexDirection: 'row',
-            alignItems: 'center',
-            borderBottomColor: 'black',
-          }}>
+        <View style={styles.headerView}>
           <TouchableOpacity
             style={{left: 10}}
             onPress={() => this.props.navigation.goBack()}>
             <Image
-              source={require('../Assets/back.png')}
-              style={{width: 25, height: 25}}
+              source={require('../Assets/back.jpg')}
+              style={styles.goBack}
             />
           </TouchableOpacity>
 
-          <Text
-            style={{
-              fontSize: 20,
-              fontWeight: 'bold',
-              left: windowWidth / 2 - 110,
-            }}>
-            Add New Character
-          </Text>
+          <Text style={styles.headerText}>Add New Character</Text>
         </View>
         <View>
-          <View style={{marginTop: 10, paddingLeft: 5}}>
-            <Text
-              style={{
-                fontSize: 15,
-                marginBottom: 5,
-                color: 'black',
-                fontWeight: 'bold',
-              }}>
-              Name Surname:
-            </Text>
+          <View style={styles.inputView}>
+            <Text style={styles.inputInfo}>Name Surname:</Text>
             <TextInput
               onChangeText={(e) => this.setState({name: e})}
-              style={{
-                padding: 10,
-                width: '98%',
-                height: 50,
-                borderRadius: 10,
-                borderWidth: 0.5,
-                backgroundColor: 'white',
-                alignSelf: 'center',
-              }}
+              style={styles.input}
             />
           </View>
-          <View style={{marginTop: 10, paddingLeft: 5}}>
-            <Text
-              style={{
-                fontSize: 15,
-                marginBottom: 5,
-                color: 'black',
-                fontWeight: 'bold',
-              }}>
-              Job Title:
-            </Text>
+          <View style={styles.inputView}>
+            <Text style={styles.inputInfo}>Job Title:</Text>
             <TextInput
               onChangeText={(e) => this.setState({job: e})}
-              style={{
-                padding: 10,
-                width: '98%',
-                height: 50,
-                borderRadius: 10,
-                borderWidth: 0.5,
-                backgroundColor: 'white',
-                alignSelf: 'center',
-              }}
+              style={styles.input}
             />
           </View>
-          <View style={{marginTop: 10, paddingLeft: 5}}>
-            <Text
-              style={{
-                fontSize: 15,
-                marginBottom: 5,
-                color: 'black',
-                fontWeight: 'bold',
-              }}>
-              About Him/Her:
-            </Text>
+          <View style={styles.inputView}>
+            <Text style={styles.inputInfo}>About Him/Her:</Text>
             <TextInput
               onChangeText={(e) => this.setState({about: e})}
-              style={{
-                padding: 10,
-                width: '98%',
-                height: 100,
-                borderRadius: 10,
-                borderWidth: 0.5,
-                backgroundColor: 'white',
-                alignSelf: 'center',
-              }}
+              style={styles.input}
             />
           </View>
-          <View style={{marginTop: 10, paddingLeft: 5}}>
-            <Text
-              style={{
-                fontSize: 15,
-                marginBottom: 5,
-                color: 'black',
-                fontWeight: 'bold',
-              }}>
-              Image Link:
-            </Text>
+          <View style={styles.inputView}>
+            <Text style={styles.inputInfo}>Image Link:</Text>
             <TextInput
               onChangeText={(e) => this.setState({avatar: e})}
-              style={{
-                padding: 10,
-                width: '98%',
-                height: 50,
-                borderRadius: 10,
-                borderWidth: 0.5,
-                backgroundColor: 'white',
-                alignSelf: 'center',
-              }}
+              style={styles.input}
             />
           </View>
           <TouchableOpacity
             onPress={() => this.AddCharacter()}
-            style={{
-              alignItems: 'center',
-              justifyContent: 'center',
-              alignSelf: 'center',
-              backgroundColor: '#2E86DF',
-              width: '98%',
-              height: 50,
-              marginTop: 20,
-              borderRadius: 20,
-            }}>
+            style={styles.addCharacterButton}>
             <Text style={{color: 'white'}}>Add Character</Text>
           </TouchableOpacity>
         </View>
